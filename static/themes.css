@@ -205,3 +205,10 @@ body.dark-mode .about-barkur p {
     font-size: 1.1em;
     line-height: 1.6;
 }
+.github-link {
+            color: blue;
+            text-decoration: underline;
+        }
+body.dark-mode .github-link {
+    color: #0051ff;
+}
