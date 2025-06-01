@@ -66,7 +66,7 @@ def index():
 @app.route('/admin/login', methods=['POST'])
 def admin_login():
     data = request.get_json()
-    if data and data.get('username') == 'Ryuk' and data.get('password') == 'ryuk123':
+    if data and data.get('username') == 'Admin' and data.get('password') == 'ryuk123':
         return jsonify({'success': True})
     return jsonify({'success': False}), 401
 
