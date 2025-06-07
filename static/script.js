@@ -55,11 +55,14 @@ async function loadTemples() {
         const container = document.getElementById('templeContainer');
         
         if (container) {
-container.innerHTML = temples.map(temple => `
+container.innerHTML = temples.map(temple => {
+    const imageUrl = temple.image_url.startsWith('/') ? temple.image_url : '/' + temple.image_url;
+    return `
     <div class="temple-image-container">
-        <img src="${temple.image_url}" alt="${temple.name}" onclick="showTempleInfo(${temple.id})" style="cursor:pointer;">
+        <img src="${imageUrl}" alt="${temple.name}" onclick="showTempleInfo(${temple.id})" style="cursor:pointer;">
     </div>
-`).join('');
+    `;
+}).join('');
 
             // Add hover tooltip for temple name on temple-info.html after loading temples
             const tooltip = document.createElement('div');
@@ -166,11 +169,13 @@ async function loadTempleGallery(templeId) {
             return;
         }
 
-        gallerySection.innerHTML = photos.map(photo => `
-            <a href="${photo.url}" data-fancybox="gallery" data-caption="Gallery photo">
-                <img src="${photo.url}" alt="Gallery photo" style="max-width: 100%; margin-bottom: 10px; border-radius: 8px; cursor: pointer;">
+        gallerySection.innerHTML = photos.map(photo => {
+            const url = photo.url.startsWith('/') ? photo.url : '/' + photo.url;
+            return `
+            <a href="${url}" data-fancybox="gallery" data-caption="Gallery photo">
+                <img src="${url}" alt="Gallery photo" style="max-width: 100%; margin-bottom: 10px; border-radius: 8px; cursor: pointer;">
             </a>
-        `).join('');
+        `}).join('');
 
         // Destroy any existing Fancybox instance before re-initializing
         if (typeof $ !== 'undefined' && $.fancybox) {
