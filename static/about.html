@@ -56,6 +56,21 @@
             }, 300);
           }
         });
+        
+            // ✅ Logo click counter for admin button reveal
+            let logoClickCount = 0;
+            const logo = document.getElementById("barkur-logo");
+            if (logo) {
+              logo.addEventListener("click", () => {
+                logoClickCount++;
+                if (logoClickCount >= 3) {
+                  const adminBtn = document.querySelector(".admin-btn");
+                  if (adminBtn) {
+                    adminBtn.classList.remove("hidden");
+                  }
+                }
+              });
+            }
       });
   </script>
   
