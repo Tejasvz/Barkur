@@ -99,6 +99,11 @@ body.dark-mode .admin-box .input-group input {
     caret-color: black !important;
 }
 
+/* Hidden class for admin button */
+.hidden {
+    display: none !important;
+}
+
 body.dark-mode .input-group i {
     color: #aaa;
 }
