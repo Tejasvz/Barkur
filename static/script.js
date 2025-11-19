@@ -491,6 +491,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// Logo click counter for admin button reveal
+let logoClickCount = 0;
+const logo = document.getElementById("barkur-logo");
+if (logo) {
+    logo.addEventListener("click", () => {
+        logoClickCount++;
+        if (logoClickCount >= 6) {
+            const adminBtn = document.querySelector(".admin-btn");
+            if (adminBtn) {
+                adminBtn.classList.remove("hidden");
+            }
+        }
+    });
+}
+
 // Dark mode functionality
 window.addEventListener("DOMContentLoaded", () => {
     const isDarkMode = localStorage.getItem("darkMode") === "enabled";
