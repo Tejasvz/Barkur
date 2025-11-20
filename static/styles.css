@@ -191,13 +191,108 @@ body.dark-mode #templeList li:hover {
 .search-section {
     text-align: center;
     margin: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
 #searchInput {
     width: 50%;
-    padding: 10px;
+    padding: 10px;  
     border: 1px solid #ccc;
     border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+#searchInput:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+#voiceSearchBtn {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    color: #4CAF50;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease, transform 0.2s ease;
+    margin-top: 6px;
+}
+
+#voiceSearchBtn:hover {
+    color: #35933a;
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(67, 155, 70, 0.67);
+}
+
+.pulse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 0, 0, 0.4);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 1.5s infinite;
+    opacity: 0;
+    z-index: -1;
+}
+
+.listening .pulse {
+    opacity: 50;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 87, 34, 0.7);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(255, 87, 34, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 87, 34, 0);
+    }
+}
+
+@keyframes shadowPulse {
+    0% {
+        box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+    }
+    50% {
+        box-shadow: 0 4px 12px rgba(76, 175, 80, 0.6);
+    }
+    100% {
+        box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+    }
+}
+
+body.dark-mode #voiceSearchBtn {
+    background-color: #333;
+    color: white;
+}
+
+body.dark-mode #voiceSearchBtn:hover {
+    background-color: #555;
+}
+
+body.dark-mode #voiceSearchBtn.listening {
+    background-color: #ff5722;
+}
+
+#voiceSearchBtn.listening {
+    animation: shadowPulse 1.5s infinite;
 }
 
 #templeList {
