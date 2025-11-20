@@ -203,11 +203,58 @@ async function loadTempleGallery(templeId) {
 function searchTemples() {
     const input = document.getElementById("searchInput").value.toLowerCase();
     const temples = document.querySelectorAll(".temple-image-container");
-    
+
     temples.forEach((temple) => {
         const imgAlt = temple.querySelector('img').alt.toLowerCase();
         temple.style.display = imgAlt.includes(input) ? "block" : "none";
     });
+}
+
+// Voice Search Functionality
+document.addEventListener('DOMContentLoaded', () => {
+    const voiceSearchBtn = document.getElementById('voiceSearchBtn');
+    if (voiceSearchBtn) {
+        voiceSearchBtn.addEventListener('click', startVoiceSearch);
+    }
+});
+
+function startVoiceSearch() {
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    if (!recognition) {
+        alert('Speech recognition is not supported in this browser.');
+        return;
+    }
+
+    recognition.lang = 'en-US'; // Set language
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onstart = () => {
+        const btn = document.getElementById('voiceSearchBtn');
+        btn.innerHTML = '<i class="fas fa-microphone-slash"></i>';
+        btn.title = 'Listening...';
+        btn.classList.add('listening');
+    };
+
+    recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        document.getElementById('searchInput').value = transcript;
+        searchTemples();
+    };
+
+    recognition.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+        alert('Error occurred in speech recognition: ' + event.error);
+    };
+
+    recognition.onend = () => {
+        const btn = document.getElementById('voiceSearchBtn');
+        btn.innerHTML = '<i class="fas fa-microphone"></i>';
+        btn.title = 'Voice Search';
+        btn.classList.remove('listening');
+    };
+
+    recognition.start();
 }
 
 // Load temples when the page loads
@@ -491,44 +538,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Logo click counter for admin button reveal
-let logoClickCount = 0;
-const logo = document.getElementById("barkur-logo");
-if (logo) {
-    logo.addEventListener("click", () => {
-        logoClickCount++;
-        if (logoClickCount >= 6) {
-            const adminBtn = document.querySelector(".admin-btn");
-            if (adminBtn) {
-                adminBtn.classList.remove("hidden");
-            }
-        }
-    });
-}
 
-// Dark mode functionality
-window.addEventListener("DOMContentLoaded", () => {
-    const isDarkMode = localStorage.getItem("darkMode") === "enabled";
-    if (isDarkMode) {
-        document.body.classList.add("dark-mode");
-        const icon = document.getElementById("modeIcon");
-        if (icon) icon.textContent = "☀️";
-    }
-});
-
-const darkModeToggle = document.getElementById("darkModeToggle");
-if (darkModeToggle) {
-    darkModeToggle.addEventListener("click", function() {
-        const isDark = document.body.classList.toggle("dark-mode");
-        localStorage.setItem("darkMode", isDark ? "enabled" : "disabled");
-
-        const icon = document.getElementById("modeIcon");
-        if (icon) {
-            icon.classList.add("rotate");
-            setTimeout(() => {
-                icon.textContent = isDark ? "☀️" : "🌙";
-                icon.classList.remove("rotate");
-            }, 300);
-        }
-    });
-}
